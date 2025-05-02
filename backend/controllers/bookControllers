@@ -1,0 +1,82 @@
+// import { books } from "../database/connection"
+// const {deleteBook, fetchBooks, addBooks, editBooks} = require("./database/connection")
+
+
+const {books} = require("../database/connection.js");
+
+exports.fetchBooks = async(req, res) => {
+    // logic to fetch data from database
+    const datas = await books.findAll()
+    res.json({
+      message: "read books successfully",
+      datas
+    });
+}
+
+exports.addBooks = async(req, res) => {
+    // logic to create data
+
+    //TASKS : check if data is coming or not , if coming --> insert to table, else--> throw error in response saying please provide all fields
+    // if (bookName || bookPrice || bookAuthor || bookGenres === true){
+      const {bookName, bookPrice, bookAuthor, bookGenres} = req.body
+      console.log(bookName)
+      await books.create({
+        bookName : bookName, // columns name : value
+        bookPrice : bookPrice,
+        bookAuthor : bookAuthor,
+        bookGenres : bookGenres
+      })
+      res.json({
+        message: "create books successfully",
+        
+      });
+    }
+
+exports.deleteBooks = async (req, res) => {
+    // logic to delete data
+    const id = req.params.id; 
+    const deleteData = await books.destroy({
+      where: {
+               id
+             }
+    });
+    
+    res.json({
+      message: "deleted books successfully",
+      deleteData
+    });
+  }
+
+exports.editBooks = (req, res) => {
+    // logic to update data
+    res.json({
+      message: "update books successfully",
+    });
+  }
+
+exports.singleFetchBook = async (req,res)=>{
+
+  // first capture what id is he/she sending 
+  const id = req.params.id
+  const datas = await books.findByPk(id); // always returns object, mongoose --> findById
+  // books.findAll({
+  //     where : {
+  //         bookName : "hello world", 
+  //         authorName : "manish"
+  //     }
+  // })
+  // }) // select * from books where bookName="hello world" && authorName = "manish"
+  // const datass = await books.findAll({
+  //     where : {
+  //         id : id
+  //     }
+  // }) // always returns array
+
+  res.json({
+    message : "single book fetched sucessfully",
+    datas
+  })
+}
+
+
+//module.exports = {fetchBooks, addBooks, editBooks, deleteBooks} yesari garna milyoo 
