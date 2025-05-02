@@ -1,6 +1,3 @@
-// import { books } from "../database/connection"
-// const {deleteBook, fetchBooks, addBooks, editBooks} = require("./database/connection")
-
 
 const {books} = require("../database/connection.js");
 
@@ -17,20 +14,20 @@ exports.addBooks = async(req, res) => {
     // logic to create data
 
     //TASKS : check if data is coming or not , if coming --> insert to table, else--> throw error in response saying please provide all fields
-    // if (bookName || bookPrice || bookAuthor || bookGenres === true){
-      const {bookName, bookPrice, bookAuthor, bookGenres} = req.body
-      console.log(bookName)
-      await books.create({
-        bookName : bookName, // columns name : value
-        bookPrice : bookPrice,
-        bookAuthor : bookAuthor,
-        bookGenres : bookGenres
-      })
-      res.json({
-        message: "create books successfully",
-        
-      });
-    }
+  
+    const {bookName, bookPrice, bookAuthor, bookGenres} = req.body
+    console.log(bookName)
+    await books.create({
+      bookName : bookName, // columns name : value
+      bookPrice : bookPrice,
+      bookAuthor : bookAuthor,
+      bookGenres : bookGenres
+    })
+    res.json({
+      message: "create books successfully",
+      
+    });
+  }
 
 exports.deleteBooks = async (req, res) => {
     // logic to delete data

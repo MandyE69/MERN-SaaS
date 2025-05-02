@@ -1,6 +1,3 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../connection");
-
 
 const userModel = (sequelize,DataTypes)=>{
    return sequelize.define("user",{

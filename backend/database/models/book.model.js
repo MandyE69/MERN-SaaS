@@ -2,8 +2,6 @@
 
 const { type } = require("os");
 
-// const { type } = require("os")
-
 const bookModel = (sequelize, DataTypes)=>{
     const Book = sequelize.define('book',{
         bookName :{
