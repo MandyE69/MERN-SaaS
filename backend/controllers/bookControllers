@@ -14,33 +14,35 @@ exports.addBooks = async(req, res) => {
     // logic to create data
 
     //TASKS : check if data is coming or not , if coming --> insert to table, else--> throw error in response saying please provide all fields
-  
     const {bookName, bookPrice, bookAuthor, bookGenres} = req.body
-    console.log(bookName)
-    await books.create({
-      bookName : bookName, // columns name : value
-      bookPrice : bookPrice,
-      bookAuthor : bookAuthor,
-      bookGenres : bookGenres
-    })
-    res.json({
-      message: "create books successfully",
-      
-    });
+    if(bookName && bookPrice && bookAuthor && bookGenres){
+      await books.create({
+        bookName : bookName, // columns name : value
+        bookPrice : bookPrice,
+        bookAuthor : bookAuthor,
+        bookGenres : bookGenres
+      })
+      res.json({
+        message: "create books successfully",
+        
+      });}
+    else{
+      res.json({
+        message: "Invalid provide the field"
+      })
+    }
   }
 
 exports.deleteBooks = async (req, res) => {
     // logic to delete data
     const id = req.params.id; 
-    const deleteData = await books.destroy({
+    await books.destroy({
       where: {
                id
              }
     });
-    
     res.json({
       message: "deleted books successfully",
-      deleteData
     });
   }
 
