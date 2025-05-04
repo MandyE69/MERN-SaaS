@@ -3,9 +3,9 @@ const {books} = require("../database/connection.js");
 
 exports.fetchBooks = async(req, res) => {
     // logic to fetch data from database
-    const datas = await books.findAll()
+    const datas = await books.findAll() // select * from books, books.find(), always return array
     res.json({
-      message: "read books successfully",
+      message: "Books fetched successfully",
       datas
     });
 }
@@ -15,12 +15,14 @@ exports.addBooks = async(req, res) => {
 
     //TASKS : check if data is coming or not , if coming --> insert to table, else--> throw error in response saying please provide all fields
     const {bookName, bookPrice, bookAuthor, bookGenres} = req.body
+    // check if all data aako xa vane only proceed , else not proceed throw error in response
     if(bookName && bookPrice && bookAuthor && bookGenres){
       await books.create({
         bookName : bookName, // columns name : value
         bookPrice : bookPrice,
         bookAuthor : bookAuthor,
         bookGenres : bookGenres
+         // columName : value
       })
       res.json({
         message: "create books successfully",
@@ -35,22 +37,47 @@ exports.addBooks = async(req, res) => {
 
 exports.deleteBooks = async (req, res) => {
     // logic to delete data
-    const id = req.params.id; 
+    // first ma kun boook delete garna aateko ho tesko id line
+    const id = req.params.id; // esari garne milcha 
+    // const {id} = req.params
+    //body bata lina milyoo const id = req.body.id
+    
+    //id payepachi, tyo id ko book chai books table bata hadaidine
     await books.destroy({
       where: {
                id
              }
-    });
+    });// delete from books where id = id
     res.json({
       message: "deleted books successfully",
-    });
+    }); // delete bhayesi dekhaucha 
   }
 
-exports.editBooks = (req, res) => {
+exports.editBooks = async(req, res) => {
     // logic to update data
+    // kun id update/edit garne tyo id line
+    try{
+    const id = req.params.id
+
+    // k k update garne hoo...
+    const {bookName, bookPrice, bookAuthor, bookGenres} = req.body
+
+    await books.update({bookName, bookPrice, bookAuthor, bookGenres}, {
+      where:{
+        id
+      }
+    })
+    // mongoose ma eesari huncha
+    // books.findByIdAndUpdate(id, {})
+
     res.json({
       message: "update books successfully",
     });
+  }catch(error){
+    res.json({
+      message: "Something went wrong"
+    })
+  }
   }
 
 exports.singleFetchBook = async (req,res)=>{
@@ -74,6 +101,7 @@ exports.singleFetchBook = async (req,res)=>{
   res.json({
     message : "single book fetched sucessfully",
     datas
+    //datas
   })
 }
 
