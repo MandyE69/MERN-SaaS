@@ -6,12 +6,14 @@ import CreatePage from "./pages/Create-Page"
 
 
 
+
 function App() {
+
   return (
     <BrowserRouter>
     <Routes>
       <Route path="/" element= {<HomePage/>} />
-      <Route path="/single-page" element= {<SinglePage/>} />
+      <Route path="/single-page/:id" element= {<SinglePage/>} />
       <Route path="/create-page" element= {<CreatePage/>} />
       <Route path="/edit-page" element= {<EditPage/>} />
     </Routes>

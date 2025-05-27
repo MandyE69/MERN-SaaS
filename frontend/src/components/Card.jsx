@@ -2,15 +2,15 @@ import {Link} from "react-router-dom"
 import Button from "./Buttton"
  
 
-function Card() {
+function Card(props) {
     return (
-       
-        <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md  ">
+        <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md">
         
-            <div className="px-5 pb-5"> <Link to="/single-page"> 
+            <div className="px-5 pb-5"> 
+            <Link to={`/single-page/${props.book.id}`}> 
             <img className="py-5 rounded-t-lg" src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg" alt="product image" />
-            
-                <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:black">Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport</h5></Link>
+                <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:black">{props.book.bookName}</h5></Link>
+                <p>{props.book.bookAuthor}</p>
                 <div className="flex items-center mt-2.5 mb-5">
                     <div className="flex items-center space-x-1 rtl:space-x-reverse">
                         <svg className="w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
@@ -34,7 +34,7 @@ function Card() {
         
                 
                 <div className="flex items-center justify-between">
-                    <span className="text-3xl font-bold text-gray-900 dark:text-white">$599</span>
+                    <span className="text-3xl font-bold text-gray-900 dark:text-black">Rs.{props.book.bookPrice}</span>
                    <Link to="/edit-page"> <Button value ="Edit Book" /> </Link>
                 </div>
                 
